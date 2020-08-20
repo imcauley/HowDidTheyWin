@@ -59,7 +59,11 @@ class DiffData:
                 except: 
                     pass
 
-        np.savetxt('test.csv', diff_time, delimiter=',')
+        last_point = diff_time[-1]
+        last_point[0] = 2880
+        diff_time = np.concatenate((diff_time, [last_point]), axis=0)
+
+
         self.away = away
         self.home = home
         self.data = diff_time
