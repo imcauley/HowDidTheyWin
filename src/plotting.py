@@ -9,20 +9,22 @@ class AnimatedScatter(object):
     def __init__(self):
         self.stream = self.data_stream()
 
-        diff = DiffData('https://www.basketball-reference.com/boxscores/pbp/202008170TOR.html')
+        diff = DiffData('https://www.basketball-reference.com/boxscores/pbp/202008190LAC.html')
         self.full_data = diff.data
+        # print(min(self.full_data[:,1]), max(self.full_data[:,1]))
+        # exit()
+
         self.current_data = np.empty([2,2], dtype=float)
         self.current_data[0] = np.array([0,0])
         self.current_data[1] = np.array([0,0])
         self.tick = 0
         self.ticks_per_second = 1
 
-
         # Setup the figure and axes...
         self.fig, self.ax = plt.subplots(figsize=(18, 9), dpi=80)
-        self.ax.axis([0, 4, -20, 30])
-        self.ax.set_yticks(range(-20, 31, 10), minor=False)
-        self.ax.set_yticks(range(-20, 31, 5), minor=True)
+        self.ax.axis([0, 4, -20, 20])
+        self.ax.set_yticks(range(-20, 21, 5), minor=False)
+        # self.ax.set_yticks(range(-15, 11, 5), minor=True)
         self.ax.grid(which='major', axis='y', linestyle='-', linewidth='1', color='black', alpha=0.1)
         self.ax.grid(which='minor', axis='y', linestyle='-', linewidth='1', color='black', alpha=0.1)
 
@@ -30,15 +32,15 @@ class AnimatedScatter(object):
         self.ax.grid(which='major', axis='x', linestyle='-', linewidth='1', color='black', alpha=0.3)
 
         self.ax.set_xlabel('Time (in quaters)')
-        self.ax.set_ylabel('Point Differential\n-Nets        +Raptors')
+        self.ax.set_ylabel('Point Differential\n-Mavs        +Clippers')
         # self.ax.xaxis.set_major_formatter(ticker.FormatStrFormatter('Quater %'))
 
         # self.fig.(num=None, )
 
-        self.line, = self.ax.plot([], [], 'o-', lw=2, ms=1.5, alpha=0.8)
+        self.line, = self.ax.plot([], [], 'o-', lw=2, ms=1.5, alpha=0.8, c="#00538C")
         # Then setup FuncAnimation.
         self.ani = animation.FuncAnimation(self.fig, self.update, frames=2880, interval=1, blit=True)
-        # self.ani.save('basic_animation.mp4', fps=60, extra_args=['-vcodec', 'libx264'])
+        self.ani.save('basic_animation.mp4', fps=60, extra_args=['-vcodec', 'libx264'])
 
 
     def setup_plot(self):

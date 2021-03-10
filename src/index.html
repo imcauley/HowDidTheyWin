@@ -53,6 +53,21 @@
             y: curr_dff
         });
     }
+
+    var animated_data = () => {
+        var index = 0;
+        var output = [];
+
+        while(index < data.length) {
+            setTimeout(() => {
+                output.push(data[index]);
+                index++;
+                console.log(output);
+            }, 300)
+        }
+        return output;
+    };
+
     var ctx = document.getElementById('scoreChart');
     var scoreChart = new Chart(ctx, {
         type: 'line',
@@ -61,7 +76,7 @@
                 lineTension: 0,
                 pointRadius: 0,
 
-                data: data
+                data: animated_data()
             }],
         },
         options: {
